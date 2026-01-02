@@ -51,31 +51,29 @@
       display: flex;
     }
     
-    .info-section {
+    /* 페이지 전환 애니메이션 */
+    .page {
       display: none;
-      animation: fadeIn 0.3s ease;
+      animation: slideIn 0.3s ease;
     }
-    .info-section.show {
+    .page.active {
       display: block;
     }
     
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .form-section {
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-    .form-section.show {
-      display: block;
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
     }
     
     input:focus, select:focus {
       outline: none;
       border-color: #FF7949;
       box-shadow: 0 0 0 3px rgba(255, 121, 73, 0.1);
+    }
+    
+    /* 프로그레스 바 */
+    .progress-bar {
+      transition: width 0.3s ease;
     }
   </style>
 </head>
@@ -86,154 +84,187 @@
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
-  <div class="max-w-lg mx-auto bg-white min-h-screen shadow-sm">
+  <div class="max-w-lg mx-auto bg-white min-h-screen shadow-sm relative">
     
-    <!-- 헤더 -->
-    <div class="bg-gradient-to-br from-brand to-brandDark text-white p-6 text-center">
-      <div class="inline-block bg-white/20 rounded-full px-3 py-1 text-sm mb-3">
-        🎁 선착순 모집 중
+    <!-- 프로그레스 바 -->
+    <div class="sticky top-0 bg-white z-10">
+      <div class="h-1 bg-gray-200">
+        <div id="progress" class="progress-bar h-full bg-brand" style="width: 33%"></div>
       </div>
-      <h1 class="text-2xl font-bold mb-2">패스오더 [시급 2배 챌린지]</h1>
-      <p class="text-white/90">참여자 모집</p>
     </div>
 
-    <div class="p-6">
+    <!-- ==================== 1단계: 인트로 + 역할 선택 ==================== -->
+    <div id="page-1" class="page active">
       
-      <!-- 인트로 -->
-      <div class="text-center mb-8">
-        <p class="text-gray-600 leading-relaxed">
-          안녕하세요, 패스오더입니다 😊<br>
-          같은 시간 일하면서,<br>
-          <span class="text-brand font-bold">월 최대 60만원까지 추가로 벌 수 있는 기회!</span>
-        </p>
+      <!-- 헤더 -->
+      <div class="bg-gradient-to-br from-brand to-brandDark text-white p-6 text-center">
+        <div class="inline-block bg-white/20 rounded-full px-3 py-1 text-sm mb-3">
+          🎁 선착순 모집 중
+        </div>
+        <h1 class="text-2xl font-bold mb-2">패스오더 [시급 2배 챌린지]</h1>
+        <p class="text-white/90">참여자 모집</p>
       </div>
 
-      <!-- 역할 선택 -->
-      <div class="mb-8">
-        <p class="text-center font-bold text-gray-800 mb-4">어떤 역할로 참여하시나요?</p>
+      <div class="p-6">
         
-        <div class="grid grid-cols-2 gap-4">
-          <!-- 알바 카드 -->
-          <div class="role-card border-2 border-gray-200 rounded-2xl p-4 text-center relative" data-role="alba">
-            <div class="role-check hidden absolute top-2 right-2 w-6 h-6 bg-brand rounded-full items-center justify-center">
-              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
-              </svg>
+        <!-- 인트로 -->
+        <div class="text-center mb-8">
+          <p class="text-gray-600 leading-relaxed">
+            안녕하세요, 패스오더입니다 😊<br>
+            같은 시간 일하면서,<br>
+            <span class="text-brand font-bold">월 최대 60만원까지 추가로 벌 수 있는 기회!</span>
+          </p>
+        </div>
+
+        <!-- 역할 선택 -->
+        <div class="mb-8">
+          <p class="text-center font-bold text-gray-800 mb-4">어떤 역할로 참여하시나요?</p>
+          
+          <div class="grid grid-cols-2 gap-4">
+            <!-- 알바 카드 -->
+            <div class="role-card border-2 border-gray-200 rounded-2xl p-4 text-center relative" data-role="alba">
+              <div class="role-check hidden absolute top-2 right-2 w-6 h-6 bg-brand rounded-full items-center justify-center">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <img src="images/알바.png" alt="알바" class="w-24 h-24 mx-auto mb-2 object-contain">
+              <p class="font-bold text-gray-800">알바로 참여</p>
+              <p class="text-xs text-gray-500 mt-1">파트타이머 / 매니저 / 직원</p>
             </div>
-            <img src="images/알바.png" alt="알바" class="w-24 h-24 mx-auto mb-2 object-contain">
-            <p class="font-bold text-gray-800">알바로 참여</p>
-            <p class="text-xs text-gray-500 mt-1">파트타이머 / 매니저 / 직원</p>
+            
+            <!-- 점주 카드 -->
+            <div class="role-card border-2 border-gray-200 rounded-2xl p-4 text-center relative" data-role="owner">
+              <div class="role-check hidden absolute top-2 right-2 w-6 h-6 bg-brand rounded-full items-center justify-center">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <img src="images/점주.png" alt="점주" class="w-24 h-24 mx-auto mb-2 object-contain">
+              <p class="font-bold text-gray-800">점주로 참여</p>
+              <p class="text-xs text-gray-500 mt-1">매장 대표 / 오너</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 다음 버튼 (역할 선택 후 활성화) -->
+        <button id="btn-to-page2" disabled
+          class="w-full bg-brand text-white py-4 rounded-xl font-bold text-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:bg-brandDark">
+          다음으로
+        </button>
+        
+      </div>
+    </div>
+
+    <!-- ==================== 2단계: 역할별 설명 ==================== -->
+    <div id="page-2" class="page">
+      
+      <!-- 헤더 -->
+      <div class="bg-gray-100 p-4 flex items-center">
+        <button onclick="goToPage(1)" class="p-2 -ml-2 text-gray-600">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <h2 class="flex-1 text-center font-bold text-gray-800 pr-8">챌린지 안내</h2>
+      </div>
+
+      <div class="p-6">
+        
+        <!-- 알바용 설명 -->
+        <div id="info-alba" class="hidden space-y-5">
+          <div class="bg-amber-50 rounded-2xl p-5">
+            <p class="font-bold text-gray-800 mb-3">🤔 왜 이 챌린지를 준비했나면요</p>
+            <div class="text-gray-600 text-sm space-y-2">
+              <p>바쁜 시간 정신없이 일하고, 손님 응대에 메뉴 제조까지.</p>
+              <p>이렇게 열심히 하는데 받는 건 정해진 시급/월급 뿐이잖아요.</p>
+              <p>그래서 준비했어요.</p>
+              <p class="text-brand font-bold">사장님이 안 주는 보너스, 패스오더가 대신 드릴게요. 🎁</p>
+            </div>
           </div>
           
-          <!-- 점주 카드 -->
-          <div class="role-card border-2 border-gray-200 rounded-2xl p-4 text-center relative" data-role="owner">
-            <div class="role-check hidden absolute top-2 right-2 w-6 h-6 bg-brand rounded-full items-center justify-center">
-              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
-              </svg>
+          <div class="bg-blue-50 rounded-2xl p-5">
+            <p class="font-bold text-gray-800 mb-3">😊 패스오더가 알바에게 좋은 이유?</p>
+            <div class="text-gray-600 text-sm space-y-3">
+              <div class="flex gap-2">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">1</span>
+                <p><b>주문 받고, 결제하고, 음료 제조까지 정신없으셨죠?</b><br>패스오더는 손님이 미리 주문·결제까지 완료해요.<br>덕분에 음료 제조에만 집중할 수 있어요.</p>
+              </div>
+              <div class="flex gap-2">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">2</span>
+                <p><b>급한 손님, 화내는 손님, 말 빠른 손님까지 응대하느라 지치셨죠?</b><br>패스오더 손님은 앱에서 직접 주문해요.<br>까다로운 주문, 얼굴 보며 받을 일이 줄어들어요.</p>
+              </div>
+              <div class="flex gap-2">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">3</span>
+                <p><b>바쁠 때 주문 실수, 걱정되셨죠?</b><br>패스오더는 옵션이 주문 내역에 그대로 남아있어요.<br>다시 묻거나 잘못 만드는 일이 줄어들어요.</p>
+              </div>
             </div>
-            <img src="images/점주.png" alt="점주" class="w-24 h-24 mx-auto mb-2 object-contain">
-            <p class="font-bold text-gray-800">점주로 참여</p>
-            <p class="text-xs text-gray-500 mt-1">매장 대표 / 오너</p>
+          </div>
+          
+          <div class="bg-green-50 rounded-2xl p-5">
+            <p class="font-bold text-gray-800 mb-3">🎁 참여 혜택</p>
+            <div class="bg-white rounded-xl p-4 mb-3">
+              <p class="text-brand font-bold text-lg">💵 손님 1명당 2,000원 지급!</p>
+              <p class="text-gray-500 text-sm">손님이 패스오더 첫 주문 완료 시, 건당 2,000원을 현금으로 지급해드려요!</p>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <p class="text-red-500 font-bold">⏰ 한정 특별 혜택!</p>
+              <p class="text-gray-700 font-bold">최대 60만원 추가 수입 가능!</p>
+              <p class="text-gray-500 text-sm">똑같이 일하면서 최대 60만원까지 더 벌 수 있어요.</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- 알바용 설명 -->
-      <div id="info-alba" class="info-section space-y-6 mb-8">
-        <div class="bg-amber-50 rounded-2xl p-5">
-          <p class="font-bold text-gray-800 mb-3">🤔 왜 이 챌린지를 준비했나면요</p>
-          <div class="text-gray-600 text-sm space-y-2">
-            <p>바쁜 시간 정신없이 일하고, 손님 응대에 메뉴 제조까지.</p>
-            <p>이렇게 열심히 하는데 받는 건 정해진 시급/월급 뿐이잖아요.</p>
-            <p>그래서 준비했어요.</p>
-            <p class="text-brand font-bold">사장님이 안 주는 보너스, 패스오더가 대신 드릴게요. 🎁</p>
-          </div>
-        </div>
-        
-        <div class="bg-blue-50 rounded-2xl p-5">
-          <p class="font-bold text-gray-800 mb-3">😊 패스오더가 알바에게 좋은 이유?</p>
-          <div class="text-gray-600 text-sm space-y-3">
-            <div class="flex gap-2">
-              <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">1</span>
-              <p><b>주문 받고, 결제하고, 음료 제조까지 정신없으셨죠?</b><br>패스오더는 손님이 미리 주문·결제까지 완료해요.<br>덕분에 음료 제조에만 집중할 수 있어요.</p>
-            </div>
-            <div class="flex gap-2">
-              <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">2</span>
-              <p><b>급한 손님, 화내는 손님, 말 빠른 손님까지 응대하느라 지치셨죠?</b><br>패스오더 손님은 앱에서 직접 주문해요.<br>까다로운 주문, 얼굴 보며 받을 일이 줄어들어요.</p>
-            </div>
-            <div class="flex gap-2">
-              <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">3</span>
-              <p><b>바쁠 때 주문 실수, 걱정되셨죠?</b><br>패스오더는 옵션이 주문 내역에 그대로 남아있어요.<br>다시 묻거나 잘못 만드는 일이 줄어들어요.</p>
+        <!-- 점주용 설명 -->
+        <div id="info-owner" class="hidden space-y-5">
+          <div class="bg-amber-50 rounded-2xl p-5">
+            <p class="font-bold text-gray-800 mb-3">🤔 왜 이 챌린지를 준비했나면요</p>
+            <div class="text-gray-600 text-sm space-y-2">
+              <p>홍보는 하고 싶은데 방법도 모르겠고, 돈 들이긴 부담되셨죠?</p>
+              <p>패스오더가 대신 해드릴게요.</p>
+              <p>알바뿐만 아니라 사장님도 직접 참여할 수 있어요.</p>
+              <p class="text-brand font-bold">비용 0원은 기본, 참여하시면 리워드까지 드려요. 🎁</p>
             </div>
           </div>
-        </div>
-        
-        <div class="bg-green-50 rounded-2xl p-5">
-          <p class="font-bold text-gray-800 mb-3">🎁 참여 혜택</p>
-          <div class="bg-white rounded-xl p-4 mb-3">
-            <p class="text-brand font-bold text-lg">💵 손님 1명당 2,000원 지급!</p>
-            <p class="text-gray-500 text-sm">손님이 패스오더 첫 주문 완료 시, 건당 2,000원을 현금으로 지급해드려요!</p>
+          
+          <div class="bg-blue-50 rounded-2xl p-5">
+            <p class="font-bold text-gray-800 mb-3">😊 패스오더가 사장님에게 좋은 이유?</p>
+            <div class="text-gray-600 text-sm space-y-3">
+              <div class="flex gap-2">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">1</span>
+                <p><b>한 번 온 손님, 다시 오게 만들기 어려우셨죠?</b><br>사용자 재사용률 최대 81%에 달하는 패스오더는<br>신규고객을 유치하고 단골고객으로 전환시켜줘요.</p>
+              </div>
+              <div class="flex gap-2">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">2</span>
+                <p><b>피크타임에 주문이 밀려서 힘드셨죠?</b><br>패스오더는 손님이 미리 주문·결제까지 완료해요.<br>회전율이 빨라지고, 매장 운영이 수월해져요.</p>
+              </div>
+              <div class="flex gap-2">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">3</span>
+                <p><b>주문 실수해서 다시 만든 적 있으시죠?</b><br>패스오더는 옵션이 주문 내역에 그대로 남아있어요.<br>주문 실수로 인한 재료 손실도 줄고, 컴플레인도 줄어들어요.</p>
+              </div>
+              <div class="flex gap-2">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">4</span>
+                <p><b>급한 손님, 화내는 손님, 말 빠른 손님까지 응대하느라 지치셨죠?</b><br>패스오더 손님은 앱에서 직접 주문해요.<br>까다로운 주문, 얼굴 보며 받을 일이 줄어들어요.</p>
+              </div>
+            </div>
           </div>
-          <div class="bg-white rounded-xl p-4">
-            <p class="text-red-500 font-bold">⏰ 한정 특별 혜택!</p>
-            <p class="text-gray-700 font-bold">최대 60만원 추가 수입 가능!</p>
-            <p class="text-gray-500 text-sm">똑같이 일하면서 최대 60만원까지 더 벌 수 있어요.</p>
+          
+          <div class="bg-green-50 rounded-2xl p-5">
+            <p class="font-bold text-gray-800 mb-3">🎁 참여 혜택</p>
+            <div class="bg-white rounded-xl p-4 mb-3">
+              <p class="text-brand font-bold text-lg">💵 손님 1명당 2,000원 지급!</p>
+              <p class="text-gray-500 text-sm">손님이 패스오더 첫 주문 완료 시, 건당 2,000원을 현금으로 지급해드려요!</p>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <p class="text-red-500 font-bold">⏰ 한정 특별 혜택!</p>
+              <p class="text-gray-700 font-bold">최대 60만원 추가 수입 가능!</p>
+              <p class="text-gray-500 text-sm">기간 지나면 혜택이 줄어드니 서두르세요 🔥</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- 점주용 설명 -->
-      <div id="info-owner" class="info-section space-y-6 mb-8">
-        <div class="bg-amber-50 rounded-2xl p-5">
-          <p class="font-bold text-gray-800 mb-3">🤔 왜 이 챌린지를 준비했나면요</p>
-          <div class="text-gray-600 text-sm space-y-2">
-            <p>홍보는 하고 싶은데 방법도 모르겠고, 돈 들이긴 부담되셨죠?</p>
-            <p>패스오더가 대신 해드릴게요.</p>
-            <p>알바뿐만 아니라 사장님도 직접 참여할 수 있어요.</p>
-            <p class="text-brand font-bold">비용 0원은 기본, 참여하시면 리워드까지 드려요. 🎁</p>
-          </div>
-        </div>
-        
-        <div class="bg-blue-50 rounded-2xl p-5">
-          <p class="font-bold text-gray-800 mb-3">😊 패스오더가 사장님에게 좋은 이유?</p>
-          <div class="text-gray-600 text-sm space-y-3">
-            <div class="flex gap-2">
-              <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">1</span>
-              <p><b>한 번 온 손님, 다시 오게 만들기 어려우셨죠?</b><br>사용자 재사용률 최대 81%에 달하는 패스오더는<br>신규고객을 유치하고 단골고객으로 전환시켜줘요.</p>
-            </div>
-            <div class="flex gap-2">
-              <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">2</span>
-              <p><b>피크타임에 주문이 밀려서 힘드셨죠?</b><br>패스오더는 손님이 미리 주문·결제까지 완료해요.<br>회전율이 빨라지고, 매장 운영이 수월해져요.</p>
-            </div>
-            <div class="flex gap-2">
-              <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">3</span>
-              <p><b>주문 실수해서 다시 만든 적 있으시죠?</b><br>패스오더는 옵션이 주문 내역에 그대로 남아있어요.<br>주문 실수로 인한 재료 손실도 줄고, 컴플레인도 줄어들어요.</p>
-            </div>
-            <div class="flex gap-2">
-              <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">4</span>
-              <p><b>급한 손님, 화내는 손님, 말 빠른 손님까지 응대하느라 지치셨죠?</b><br>패스오더 손님은 앱에서 직접 주문해요.<br>까다로운 주문, 얼굴 보며 받을 일이 줄어들어요.</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="bg-green-50 rounded-2xl p-5">
-          <p class="font-bold text-gray-800 mb-3">🎁 참여 혜택</p>
-          <div class="bg-white rounded-xl p-4 mb-3">
-            <p class="text-brand font-bold text-lg">💵 손님 1명당 2,000원 지급!</p>
-            <p class="text-gray-500 text-sm">손님이 패스오더 첫 주문 완료 시, 건당 2,000원을 현금으로 지급해드려요!</p>
-          </div>
-          <div class="bg-white rounded-xl p-4">
-            <p class="text-red-500 font-bold">⏰ 한정 특별 혜택!</p>
-            <p class="text-gray-700 font-bold">최대 60만원 추가 수입 가능!</p>
-            <p class="text-gray-500 text-sm">기간 지나면 혜택이 줄어드니 서두르세요 🔥</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- 신청 절차 (공통) -->
-      <div id="procedure-section" class="info-section mb-8">
-        <div class="bg-gray-100 rounded-2xl p-5">
+        <!-- 신청 절차 (공통) -->
+        <div class="bg-gray-100 rounded-2xl p-5 mt-5">
           <p class="font-bold text-gray-800 mb-3">📋 신청 절차</p>
           <div class="space-y-2 text-sm text-gray-600">
             <p>1. 참여 신청서 작성 & 제출하기</p>
@@ -242,12 +273,33 @@
             <p>4. 손님 전달용 쿠폰 받으면 [시급 2배 챌린지] 바로 시작! 🎉</p>
           </div>
         </div>
+
+        <!-- 신청하기 버튼 -->
+        <button onclick="goToPage(3)"
+          class="w-full bg-brand text-white py-4 rounded-xl font-bold text-lg mt-6 hover:bg-brandDark transition-colors">
+          신청하기
+        </button>
+        
+      </div>
+    </div>
+
+    <!-- ==================== 3단계: 신청 폼 ==================== -->
+    <div id="page-3" class="page">
+      
+      <!-- 헤더 -->
+      <div class="bg-gray-100 p-4 flex items-center">
+        <button onclick="goToPage(2)" class="p-2 -ml-2 text-gray-600">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <h2 class="flex-1 text-center font-bold text-gray-800 pr-8">참여 신청서</h2>
       </div>
 
-      <!-- 신청 폼 -->
-      <div id="form-section" class="form-section">
+      <div class="p-6">
+        
         <div class="bg-brand/5 rounded-2xl p-5 border-2 border-brand/20">
-          <p class="font-bold text-gray-800 mb-1">📝 지금 바로 신청하세요!</p>
+          <p class="font-bold text-gray-800 mb-1">📝 신청 정보를 입력해주세요</p>
           <p class="text-sm text-gray-500 mb-5">선착순 마감될 수 있어요</p>
           
           <form id="application-form" class="space-y-4">
@@ -330,37 +382,47 @@
             <!-- 제출 버튼 -->
             <button type="submit" id="submit-btn"
               class="w-full bg-brand text-white py-4 rounded-xl font-bold text-lg hover:bg-brandDark transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-              신청하기
+              신청 완료하기
             </button>
           </form>
         </div>
+        
       </div>
+    </div>
 
+    <!-- ==================== 4단계: 완료 화면 ==================== -->
+    <div id="page-4" class="page">
+      <div class="min-h-screen flex items-center justify-center p-6">
+        <div class="text-center">
+          <div class="text-7xl mb-6">🎉</div>
+          <h2 class="text-2xl font-bold text-gray-800 mb-3">신청 완료!</h2>
+          <p class="text-gray-600 mb-8 leading-relaxed">
+            영업일 2~3일 내로<br>카카오톡으로 안내드릴게요!
+          </p>
+          <div class="bg-gray-100 rounded-2xl p-5 text-left mb-6">
+            <p class="text-sm text-gray-500 mb-2">문의사항이 있으시면</p>
+            <p class="text-gray-700 font-bold">help@passorder.co.kr</p>
+          </div>
+          <p class="text-sm text-gray-400">이 페이지를 닫으셔도 됩니다</p>
+        </div>
+      </div>
     </div>
     
-    <!-- 푸터 -->
-    <div class="bg-gray-100 p-6 text-center text-xs text-gray-500">
+    <!-- 푸터 (1~3단계만) -->
+    <div id="footer" class="bg-gray-100 p-6 text-center text-xs text-gray-500">
       <p>© 2025 PAYTA LAB CORP. ALL RIGHTS RESERVED</p>
       <p class="mt-1">문의: help@passorder.co.kr</p>
     </div>
 
   </div>
 
-  <!-- 완료 화면 -->
-  <div id="success-screen" class="hidden fixed inset-0 bg-white z-50 flex items-center justify-center">
-    <div class="text-center p-6">
-      <div class="text-6xl mb-4">🎉</div>
-      <h2 class="text-2xl font-bold text-gray-800 mb-2">신청 완료!</h2>
-      <p class="text-gray-600 mb-6">
-        영업일 2~3일 내로<br>카카오톡으로 안내드릴게요!
-      </p>
-      <p class="text-sm text-gray-400">이 페이지를 닫으셔도 됩니다</p>
-    </div>
-  </div>
-
   <script>
     // ========== 설정 ==========
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbweYX7ZOg2M1goezR6RiXYz0tDVs1eHSaqOla_GQeGgLy0EV1l3PHAuilphj0ZGN3-J/exec';
+    
+    // ========== 상태 ==========
+    let currentPage = 1;
+    let selectedRole = '';
     
     // ========== URL 파라미터 & entry_time ==========
     const params = new URLSearchParams(window.location.search);
@@ -388,13 +450,35 @@
     document.getElementById('entry_time').value = entryTime;
     document.getElementById('channel').value = channel;
     
+    // ========== 페이지 전환 ==========
+    function goToPage(pageNum) {
+      // 현재 페이지 숨기기
+      document.getElementById(`page-${currentPage}`).classList.remove('active');
+      
+      // 새 페이지 표시
+      document.getElementById(`page-${pageNum}`).classList.add('active');
+      currentPage = pageNum;
+      
+      // 프로그레스 바 업데이트
+      const progress = (pageNum / 4) * 100;
+      document.getElementById('progress').style.width = `${progress}%`;
+      
+      // 푸터 숨김 (완료 페이지)
+      document.getElementById('footer').style.display = pageNum === 4 ? 'none' : 'block';
+      
+      // 맨 위로 스크롤
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // 2단계로 갈 때 역할별 설명 표시
+      if (pageNum === 2) {
+        document.getElementById('info-alba').classList.toggle('hidden', selectedRole !== 'alba');
+        document.getElementById('info-owner').classList.toggle('hidden', selectedRole !== 'owner');
+      }
+    }
+    
     // ========== 역할 선택 ==========
     const roleCards = document.querySelectorAll('.role-card');
-    const infoAlba = document.getElementById('info-alba');
-    const infoOwner = document.getElementById('info-owner');
-    const procedureSection = document.getElementById('procedure-section');
-    const formSection = document.getElementById('form-section');
-    const roleInput = document.getElementById('role');
+    const btnToPage2 = document.getElementById('btn-to-page2');
     
     roleCards.forEach(card => {
       card.addEventListener('click', function() {
@@ -402,28 +486,19 @@
         roleCards.forEach(c => c.classList.remove('selected'));
         this.classList.add('selected');
         
-        const role = this.dataset.role;
-        roleInput.value = role;
+        selectedRole = this.dataset.role;
+        document.getElementById('role').value = selectedRole;
         
-        // 설명 섹션 표시
-        infoAlba.classList.remove('show');
-        infoOwner.classList.remove('show');
-        
-        if (role === 'alba') {
-          infoAlba.classList.add('show');
-        } else {
-          infoOwner.classList.add('show');
-        }
-        
-        // 절차 & 폼 표시
-        procedureSection.classList.add('show');
-        formSection.classList.add('show');
-        
-        // 스크롤
-        setTimeout(() => {
-          this.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
+        // 다음 버튼 활성화
+        btnToPage2.disabled = false;
       });
+    });
+    
+    // 다음 버튼 클릭
+    btnToPage2.addEventListener('click', function() {
+      if (selectedRole) {
+        goToPage(2);
+      }
     });
     
     // ========== 전화번호 자동 포맷 ==========
@@ -469,13 +544,13 @@
           mode: 'no-cors'
         });
         
-        // 완료 화면 표시
-        document.getElementById('success-screen').classList.remove('hidden');
+        // 완료 페이지로 이동
+        goToPage(4);
         
       } catch (error) {
         alert('제출 중 오류가 발생했습니다. 다시 시도해주세요.');
         submitBtn.disabled = false;
-        submitBtn.textContent = '신청하기';
+        submitBtn.textContent = '신청 완료하기';
       }
     });
   </script>
