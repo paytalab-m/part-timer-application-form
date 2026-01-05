@@ -6,14 +6,21 @@
   <title>패스오더 시급 2배 챌린지 참여 신청</title>
   
   <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-TBJRDLWT');</script>
-
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TBJRDLWT');
+  </script>
+  
+  <!-- 다음 주소 API -->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  
+  <!-- QR 코드 라이브러리 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -24,7 +31,7 @@
             brandDark: '#E5BC00',
             brown: '#452614',
             brownLight: '#5C3A1E',
-            brownBg: '#FFF9E6',
+            brownBg: '#FFF9E6'
           }
         }
       }
@@ -32,49 +39,122 @@
   </script>
   
   <style>
-    * { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.7; }
-    .role-card { transition: all 0.2s ease; cursor: pointer; }
-    .role-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(69, 38, 20, 0.15); }
-    .role-card.selected { border-color: #FCD20B; background: #FFF9E6; }
-    .role-card.selected .role-check { display: flex; }
-    .page { display: none; animation: slideIn 0.3s ease; }
-    .page.active { display: block; }
-    @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-    .badge-bounce { animation: bounce 1.5s ease-in-out infinite; }
-    input:focus, select:focus { outline: none; border-color: #FCD20B; box-shadow: 0 0 0 3px rgba(252, 210, 11, 0.2); }
-    .progress-bar { transition: width 0.3s ease; }
-    .info-box { border-radius: 16px; padding: 20px; margin-bottom: 16px; }
-    .info-box p, .info-box div { line-height: 1.8; }
+    * {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+    }
+    .role-card {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .role-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(69, 38, 20, 0.15);
+    }
+    .role-card.selected {
+      border-color: #FCD20B;
+      background: #FFF9E6;
+    }
+    .role-card.selected .role-check {
+      display: flex;
+    }
+    .page {
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+    .page.active {
+      display: block;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .badge-bounce {
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #FCD20B;
+      box-shadow: 0 0 0 3px rgba(252, 210, 11, 0.2);
+    }
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    .info-box {
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .info-box p, .info-box div {
+      line-height: 1.7;
+    }
+    .highlight {
+      background: linear-gradient(transparent 60%, rgba(252, 210, 11, 0.5) 40%);
+      padding: 0 4px;
+    }
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .contact-btn.primary {
+      background: #452614;
+      color: #FCD20B;
+    }
+    .contact-btn.primary:hover {
+      background: #5C3A1E;
+    }
+    .contact-btn.kakao {
+      background: #FEE500;
+      color: #3C1E1E;
+    }
+    .contact-btn.kakao:hover {
+      background: #E5CF00;
+    }
   </style>
 </head>
 <body class="bg-brownBg min-h-screen">
-
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBJRDLWT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-
+  
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBJRDLWT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  
   <div class="max-w-lg mx-auto bg-white min-h-screen shadow-sm relative">
     
+    <!-- 프로그레스 바 -->
     <div class="sticky top-0 bg-white z-10">
       <div class="h-1 bg-gray-200">
         <div id="progress" class="progress-bar h-full bg-brand" style="width: 33%"></div>
       </div>
     </div>
 
-    <!-- 1단계 -->
+    <!-- ==================== 1단계: 인트로 + 역할 선택 ==================== -->
     <div id="page-1" class="page active">
       <div class="bg-brand text-brown p-6 text-center">
         <div class="badge-bounce inline-block bg-brown text-brand rounded-full px-4 py-1.5 text-sm font-bold mb-4">🎁 선착순 모집 중</div>
         <h1 class="text-2xl font-bold mb-2">패스오더 [시급 2배 챌린지]</h1>
         <p class="text-brown/80">참여자 모집</p>
       </div>
-
+      
       <div class="p-6">
+        <!-- 인트로 -->
         <div class="text-center mb-6 pb-6 border-b border-gray-200">
           <p class="text-gray-700">안녕하세요, 패스오더입니다 😊</p>
-          <p class="text-gray-700 mt-2">같은 시간 일하면서,</p>
-          <p class="text-brown font-bold text-lg mt-2">월 최대 60만원까지 추가로 벌 수 있는 기회!</p>
+          <p class="text-gray-700">같은 시간 일하면서,</p>
+          <p class="text-brown font-bold text-lg mt-1">💰 <span class="highlight">월 최대 60만원</span>까지 추가로 벌 수 있는 기회! 💰</p>
         </div>
-
+        
         <!-- PC용 QR 섹션 -->
         <div id="qr-section" class="mb-6" style="display: none;">
           <button onclick="toggleQR()" class="w-full bg-brown/10 text-brown py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-brown/20 transition-colors">
@@ -87,23 +167,31 @@
             <p class="text-gray-600 text-sm">카메라로 QR 코드를 찍어서 참여해주세요!</p>
           </div>
         </div>
-
+        
+        <!-- 역할 선택 -->
         <div class="mb-8">
           <p class="text-center font-bold text-brown text-lg mb-2">어떤 역할로 참여하시나요?</p>
           <p class="text-center text-gray-500 text-sm mb-5">알바 / 점주 관계없이 패스오더 도입 매장에서<br>일하고 계시다면 누구나 참여 가능해요!</p>
           
           <div class="grid grid-cols-2 gap-4">
+            <!-- 알바 카드 -->
             <div class="role-card border-2 border-gray-200 rounded-2xl p-4 text-center relative bg-white" data-role="alba">
               <div class="role-check hidden absolute top-2 right-2 w-6 h-6 bg-brand rounded-full items-center justify-center">
-                <svg class="w-4 h-4 text-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                <svg class="w-4 h-4 text-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
               </div>
               <img src="images/알바.png" alt="알바" class="w-24 h-24 mx-auto mb-3 object-contain">
               <p class="font-bold text-brown">알바로 참여</p>
               <p class="text-xs text-gray-500 mt-2">파트타이머 / 매니저 / 직원</p>
             </div>
+            
+            <!-- 점주 카드 -->
             <div class="role-card border-2 border-gray-200 rounded-2xl p-4 text-center relative bg-white" data-role="owner">
               <div class="role-check hidden absolute top-2 right-2 w-6 h-6 bg-brand rounded-full items-center justify-center">
-                <svg class="w-4 h-4 text-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                <svg class="w-4 h-4 text-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
               </div>
               <img src="images/점주.png" alt="점주" class="w-24 h-24 mx-auto mb-3 object-contain">
               <p class="font-bold text-brown">점주로 참여</p>
@@ -111,117 +199,195 @@
             </div>
           </div>
         </div>
-
-        <button id="btn-to-page2" disabled class="w-full bg-brand text-brown py-4 rounded-xl font-bold text-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:bg-brandDark">신청하기</button>
+        
+        <button id="btn-to-page2" disabled class="w-full bg-brand text-brown py-4 rounded-xl font-bold text-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:bg-brandDark">
+          신청하기
+        </button>
       </div>
     </div>
 
-    <!-- 2단계 -->
+    <!-- ==================== 2단계: 역할별 설명 ==================== -->
     <div id="page-2" class="page">
       <div class="bg-brand p-4 flex items-center">
         <button onclick="goToPage(1)" class="p-2 -ml-2 text-brown">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
         </button>
         <h2 class="flex-1 text-center font-bold text-brown pr-8">챌린지 안내</h2>
       </div>
-
+      
       <div class="p-6">
+        <!-- 알바용 설명 -->
         <div id="info-alba" class="hidden">
           <div class="info-box bg-brand/20">
             <p class="font-bold text-brown mb-4 text-lg">🎁 참여 혜택</p>
             <div class="bg-white rounded-xl p-4 mb-3">
               <p class="text-brown font-bold text-lg">💵 손님 1명당 2,000원 지급!</p>
-              <p class="text-gray-600 text-sm mt-2">손님이 패스오더 첫 주문 완료 시, 건당 2,000원을 현금으로 지급해드려요!</p>
+              <p class="text-gray-600 text-sm mt-2">손님이 패스오더 첫 주문 완료 시,<br>건당 2,000원을 현금으로 지급해드려요!</p>
             </div>
             <div class="bg-white rounded-xl p-4">
               <p class="text-red-500 font-bold">⏰ 한정 특별 혜택!</p>
-              <p class="text-brown font-bold mt-1">최대 60만원 추가 수입 가능!</p>
-              <p class="text-gray-600 text-sm mt-2">똑같이 일하면서 최대 60만원까지 더 벌 수 있어요.</p>
+              <p class="text-brown font-bold mt-1">1월 한정 월 최대 60만원 추가 수입 가능!</p>
+              <p class="text-gray-600 text-sm mt-2">똑같은 시간 일하면서<br>1월 한정 월 최대 60만원까지 더 벌 수 있어요.<br>기간이 지나면 혜택이 줄어드니 서두르세요 🔥</p>
             </div>
           </div>
+          
           <div class="info-box bg-gray-100">
             <p class="font-bold text-brown mb-4 text-lg">📋 신청 절차</p>
             <div class="space-y-3 text-gray-700">
-              <div class="flex gap-3"><span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span><p>참여 신청서 작성 & 제출하기</p></div>
-              <div class="flex gap-3"><span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span><p>선정되면 영업일 2~3일 내 카카오톡으로 안내 메시지를 보내드려요!</p></div>
-              <div class="flex gap-3"><span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span><p>안내 메시지 수신 후 영업일 2~3일 내 작성해주신 주소로 손님 전달용 쿠폰이 배송돼요</p></div>
-              <div class="flex gap-3"><span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">4</span><p>손님 전달용 쿠폰 받으면 [시급 2배 챌린지] 바로 시작! 🎉</p></div>
+              <div class="flex gap-3">
+                <span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span>
+                <p>참여 신청서 작성 & 제출하기</p>
+              </div>
+              <div class="flex gap-3">
+                <span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span>
+                <p>선정되면 영업일 2~3일 내<br>문자 메시지로 안내 드려요!</p>
+              </div>
+              <div class="flex gap-3">
+                <span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span>
+                <p>안내 메시지 수신 후 영업일 2~3일 내<br>작성해주신 주소로 손님 전달용 쿠폰이 배송돼요</p>
+              </div>
+              <div class="flex gap-3">
+                <span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">4</span>
+                <p>손님 전달용 쿠폰 받으면<br>[시급 2배 챌린지] 바로 시작! 🎉</p>
+              </div>
             </div>
           </div>
+          
           <div class="info-box bg-amber-50">
             <p class="font-bold text-brown mb-4 text-lg">🤔 왜 이 챌린지를 준비했나면요</p>
-            <div class="text-gray-700 space-y-3">
-              <p>바쁜 시간 정신없이 일하고, 손님 응대에 메뉴 제조까지.</p>
-              <p>이렇게 열심히 하는데 받는 건 정해진 시급/월급 뿐이잖아요.</p>
-              <p>그래서 준비했어요.</p>
-              <p class="text-brown font-bold text-base">사장님이 안 주는 보너스, 패스오더가 대신 드릴게요. 🎁</p>
+            <div class="text-gray-700">
+              <p>바쁜 시간 정신없이 일하고,<br>손님 응대에 메뉴 제조까지.<br>이렇게 열심히 하는데 받는 건<br>정해진 시급·월급 뿐이잖아요.</p>
+              <p class="mt-3">그래서 준비했어요.<br>사장님이 안 주는 보너스,<br><span class="text-brown font-bold">패스오더가 대신 드릴게요. 🎁</span></p>
             </div>
           </div>
+          
           <div class="info-box bg-blue-50">
             <p class="font-bold text-brown mb-4 text-lg">😊 패스오더가 알바에게 좋은 이유?</p>
             <div class="space-y-4">
-              <div class="flex gap-3"><span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span><div class="text-gray-700"><p class="font-bold">주문 받고, 결제하고, 음료 제조까지 정신없으셨죠?</p><p class="mt-1">패스오더는 손님이 미리 주문·결제까지 완료해요. 덕분에 음료 제조에만 집중할 수 있어요.</p></div></div>
-              <div class="flex gap-3"><span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span><div class="text-gray-700"><p class="font-bold">급한 손님, 화내는 손님, 말 빠른 손님까지 응대하느라 지치셨죠?</p><p class="mt-1">패스오더 손님은 앱에서 직접 주문해요. 까다로운 주문, 얼굴 보며 받을 일이 줄어들어요.</p></div></div>
-              <div class="flex gap-3"><span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span><div class="text-gray-700"><p class="font-bold">바쁠 때 주문 실수, 걱정되셨죠?</p><p class="mt-1">패스오더는 옵션이 주문 내역에 그대로 남아있어요. 다시 묻거나 잘못 만드는 일이 줄어들어요.</p></div></div>
+              <div class="flex gap-3">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span>
+                <div class="text-gray-700">
+                  <p class="font-bold">주문 받고, 결제하고, 음료 제조까지<br>정신없으셨죠?</p>
+                  <p class="mt-1">패스오더는 손님이 미리 주문·결제까지<br>완료해요. 덕분에 음료 제조에만<br>집중할 수 있어요.</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span>
+                <div class="text-gray-700">
+                  <p class="font-bold">급한 손님, 화내는 손님<br>응대하느라 지치셨죠?</p>
+                  <p class="mt-1">패스오더 손님은 앱에서 직접 주문해요.<br>까다로운 주문, 얼굴 보며 받을 일이<br>줄어들어요.</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span>
+                <div class="text-gray-700">
+                  <p class="font-bold">바쁠 때 주문 실수, 걱정되셨죠?</p>
+                  <p class="mt-1">패스오더는 옵션이 주문 내역에 그대로<br>남아있어요. 다시 묻거나 잘못 만드는 일이<br>줄어들어요.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
+        
+        <!-- 점주용 설명 -->
         <div id="info-owner" class="hidden">
           <div class="info-box bg-brand/20">
             <p class="font-bold text-brown mb-4 text-lg">🎁 참여 혜택</p>
             <div class="bg-white rounded-xl p-4 mb-3">
               <p class="text-brown font-bold text-lg">💵 손님 1명당 2,000원 지급!</p>
-              <p class="text-gray-600 text-sm mt-2">손님이 패스오더 첫 주문 완료 시, 건당 2,000원을 현금으로 지급해드려요!</p>
+              <p class="text-gray-600 text-sm mt-2">손님이 패스오더 첫 주문 완료 시,<br>건당 2,000원을 현금으로 지급해드려요!</p>
             </div>
             <div class="bg-white rounded-xl p-4">
               <p class="text-red-500 font-bold">⏰ 한정 특별 혜택!</p>
-              <p class="text-brown font-bold mt-1">최대 60만원 추가 수입 가능!</p>
-              <p class="text-gray-600 text-sm mt-2">기간 지나면 혜택이 줄어드니 서두르세요 🔥</p>
+              <p class="text-brown font-bold mt-1">1월 한정 월 최대 60만원 추가 수입 가능! 🎉</p>
+              <p class="text-gray-600 text-sm mt-2">똑같은 시간 일하면서<br>1월 한정 월 최대 60만원까지 더 벌 수 있어요.<br>기간이 지나면 혜택이 줄어드니 서두르세요 🔥</p>
             </div>
           </div>
+          
           <div class="info-box bg-gray-100">
             <p class="font-bold text-brown mb-4 text-lg">📋 신청 절차</p>
             <div class="space-y-3 text-gray-700">
-              <div class="flex gap-3"><span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span><p>참여 신청서 작성 & 제출하기</p></div>
-              <div class="flex gap-3"><span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span><p>선정되면 영업일 2~3일 내 카카오톡으로 안내 메시지를 보내드려요!</p></div>
-              <div class="flex gap-3"><span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span><p>안내 메시지 수신 후 영업일 2~3일 내 작성해주신 주소로 손님 전달용 쿠폰이 배송돼요</p></div>
-              <div class="flex gap-3"><span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">4</span><p>손님 전달용 쿠폰 받으면 [시급 2배 챌린지] 바로 시작! 🎉</p></div>
+              <div class="flex gap-3">
+                <span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span>
+                <p>참여 신청서 작성 & 제출하기</p>
+              </div>
+              <div class="flex gap-3">
+                <span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span>
+                <p>선정되면 영업일 2~3일 내<br>문자 메시지로 안내 드려요!</p>
+              </div>
+              <div class="flex gap-3">
+                <span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span>
+                <p>안내 메시지 수신 후 영업일 2~3일 내<br>작성해주신 주소로 손님 전달용 쿠폰이 배송돼요</p>
+              </div>
+              <div class="flex gap-3">
+                <span class="bg-brand text-brown rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">4</span>
+                <p>손님 전달용 쿠폰 받으면<br>[시급 2배 챌린지] 바로 시작! 🎉</p>
+              </div>
             </div>
           </div>
+          
           <div class="info-box bg-amber-50">
             <p class="font-bold text-brown mb-4 text-lg">🤔 왜 이 챌린지를 준비했나면요</p>
-            <div class="text-gray-700 space-y-3">
-              <p>홍보는 하고 싶은데 방법도 모르겠고, 돈 들이긴 부담되셨죠?</p>
-              <p>패스오더가 대신 해드릴게요.</p>
-              <p>알바뿐만 아니라 사장님도 직접 참여할 수 있어요.</p>
-              <p class="text-brown font-bold text-base">비용 0원은 기본, 참여하시면 리워드까지 드려요. 🎁</p>
+            <div class="text-gray-700">
+              <p>홍보는 하고 싶은데 방법은 모르겠고,<br>돈 들이긴 부담되셨죠?<br>패스오더가 대신 해드릴게요.</p>
+              <p class="mt-3">알바뿐만 아니라<br>사장님도 직접 참여할 수 있어요.<br>비용 0원은 기본,<br><span class="text-brown font-bold">참여하시면 리워드까지 드려요. 🎁</span></p>
             </div>
           </div>
+          
           <div class="info-box bg-blue-50">
             <p class="font-bold text-brown mb-4 text-lg">😊 패스오더가 사장님에게 좋은 이유?</p>
             <div class="space-y-4">
-              <div class="flex gap-3"><span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span><div class="text-gray-700"><p class="font-bold">한 번 온 손님, 다시 오게 만들기 어려우셨죠?</p><p class="mt-1">사용자 재사용률 최대 81%에 달하는 패스오더는 신규고객을 유치하고 단골고객으로 전환시켜줘요.</p></div></div>
-              <div class="flex gap-3"><span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span><div class="text-gray-700"><p class="font-bold">피크타임에 주문이 밀려서 힘드셨죠?</p><p class="mt-1">패스오더는 손님이 미리 주문·결제까지 완료해요. 회전율이 빨라지고, 매장 운영이 수월해져요.</p></div></div>
-              <div class="flex gap-3"><span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span><div class="text-gray-700"><p class="font-bold">주문 실수해서 다시 만든 적 있으시죠?</p><p class="mt-1">패스오더는 옵션이 주문 내역에 그대로 남아있어요. 주문 실수로 인한 재료 손실도 줄고, 컴플레인도 줄어들어요.</p></div></div>
-              <div class="flex gap-3"><span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">4</span><div class="text-gray-700"><p class="font-bold">급한 손님, 화내는 손님 응대하느라 지치셨죠?</p><p class="mt-1">패스오더 손님은 앱에서 직접 주문해요. 까다로운 주문, 얼굴 보며 받을 일이 줄어들어요.</p></div></div>
+              <div class="flex gap-3">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span>
+                <div class="text-gray-700">
+                  <p class="font-bold">한 번 온 손님,<br>다시 오게 만들기 어려우셨죠?</p>
+                  <p class="mt-1">사용자 재사용률 최대 81%에 달하는<br>패스오더는 신규고객을 유치하고<br>단골고객으로 전환시켜줘요.</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span>
+                <div class="text-gray-700">
+                  <p class="font-bold">피크타임에 주문이 밀려서<br>힘드셨죠?</p>
+                  <p class="mt-1">패스오더는 손님이 미리 주문·결제까지<br>완료해요. 회전율이 빨라지고,<br>매장 운영이 수월해져요.</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span>
+                <div class="text-gray-700">
+                  <p class="font-bold">주문 실수해서 다시 만든 적<br>있으시죠?</p>
+                  <p class="mt-1">패스오더는 옵션이 주문 내역에 그대로<br>남아있어요. 주문 실수로 인한 재료 손실도 줄고,<br>컴플레인도 줄어들어요.</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">4</span>
+                <div class="text-gray-700">
+                  <p class="font-bold">급한 손님, 화내는 손님<br>응대하느라 지치셨죠?</p>
+                  <p class="mt-1">패스오더 손님은 앱에서 직접 주문해요.<br>까다로운 주문, 얼굴 보며 받을 일이<br>줄어들어요.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <button onclick="goToPage(3)" class="w-full bg-brand text-brown py-4 rounded-xl font-bold text-lg mt-4 hover:bg-brandDark transition-colors">신청하기</button>
+        
+        <button onclick="goToPage(3)" class="w-full bg-brand text-brown py-4 rounded-xl font-bold text-lg mt-4 hover:bg-brandDark transition-colors">
+          신청하기
+        </button>
       </div>
     </div>
 
-    <!-- 3단계 -->
+    <!-- ==================== 3단계: 신청 폼 ==================== -->
     <div id="page-3" class="page">
       <div class="bg-brand p-4 flex items-center">
         <button onclick="goToPage(2)" class="p-2 -ml-2 text-brown">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
         </button>
         <h2 class="flex-1 text-center font-bold text-brown pr-8">참여 신청서</h2>
       </div>
-
+      
       <div class="p-6">
         <div class="bg-brand/10 rounded-2xl p-5 border-2 border-brand/30">
           <p class="font-bold text-brown mb-1 text-lg">📝 신청 정보를 입력해주세요</p>
@@ -232,27 +398,32 @@
             <input type="hidden" id="channel" name="channel">
             <input type="hidden" id="role" name="role">
             
+            <!-- 매장명 -->
             <div>
               <label class="block text-sm font-bold text-brown mb-2">매장명 <span class="text-red-500">*</span></label>
-              <p class="text-sm text-gray-500 mb-3">패스오더 프로그램 내에 등록된 이름으로 적어주시면 좋아요 😊</p>
+              <p class="text-sm text-gray-500 mb-3">패스오더 프로그램 내에 등록된<br>이름으로 적어주시면 좋아요 😊</p>
+              <img src="images/폼_내_매장명.png" alt="매장명 예시" class="w-full rounded-xl mb-3 border border-gray-200">
               <input type="text" id="store_name" name="store_name" required class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-base" placeholder="예: 패스커피 강남점">
             </div>
             
+            <!-- 닉네임 -->
             <div>
               <label class="block text-sm font-bold text-brown mb-2">닉네임 <span class="text-red-500">*</span></label>
-              <p class="text-sm text-gray-500 mb-3">손님 전달용 쿠폰에 닉네임을 커스텀하여 제작해 드릴 예정이에요 😊 (2자 ~ 6자)</p>
+              <p class="text-sm text-gray-500 mb-3">손님 전달용 쿠폰에 닉네임을 커스텀하여<br>제작해 드릴 예정이에요 😊 (2 ~ 6자)</p>
               <input type="text" id="nickname" name="nickname" required minlength="2" maxlength="6" class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-base" placeholder="예: 민수">
             </div>
             
+            <!-- 연락처 -->
             <div>
               <label class="block text-sm font-bold text-brown mb-2">연락처 <span class="text-red-500">*</span></label>
               <p class="text-sm text-gray-500 mb-3">선정 안내, 리워드 지급 등 안내에 필요해요 😊</p>
               <input type="tel" id="phone" name="phone" required class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-base" placeholder="010-0000-0000" maxlength="13">
             </div>
             
+            <!-- 주소 -->
             <div>
               <label class="block text-sm font-bold text-brown mb-2">손님 전달용 쿠폰을 배송 받을 주소 <span class="text-red-500">*</span></label>
-              <p class="text-sm text-gray-500 mb-3">매장 주소는 분실 위험이 있어서, 되도록 자택 주소로 부탁드려요 😊</p>
+              <p class="text-sm text-gray-500 mb-3">매장 주소는 분실 위험이 있어서,<br>되도록 자택 주소로 부탁드려요 😊</p>
               <div class="flex gap-2 mb-3">
                 <input type="text" id="zipcode" name="zipcode" readonly required class="w-28 border border-gray-300 rounded-xl px-4 py-3.5 text-base bg-gray-50" placeholder="우편번호">
                 <button type="button" onclick="searchAddress()" class="bg-brown text-white px-4 py-3.5 rounded-xl font-bold text-sm whitespace-nowrap hover:bg-brownLight">🔍 주소 검색</button>
@@ -261,35 +432,48 @@
               <input type="text" id="address_detail" name="address_detail" required class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-base" placeholder="상세 주소를 입력해주세요">
             </div>
             
+            <!-- 동의 -->
             <div class="bg-white rounded-xl p-4 border border-gray-200">
               <label class="flex items-start gap-3 cursor-pointer">
                 <input type="checkbox" id="agreement" name="agreement" required class="mt-1 w-5 h-5 accent-brand rounded">
-                <span class="text-gray-700">위 안내사항을 모두 확인했으며, 이벤트 참여를 신청합니다 <span class="text-red-500">*</span></span>
+                <span class="text-gray-700">위 안내사항을 모두 확인했으며,<br>이벤트 참여를 신청합니다. <span class="text-red-500">*</span></span>
               </label>
             </div>
             
-            <button type="submit" id="submit-btn" class="w-full bg-brand text-brown py-4 rounded-xl font-bold text-lg hover:bg-brandDark transition-colors disabled:opacity-50 disabled:cursor-not-allowed">신청 완료하기</button>
+            <button type="submit" id="submit-btn" class="w-full bg-brand text-brown py-4 rounded-xl font-bold text-lg hover:bg-brandDark transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+              신청 완료하기
+            </button>
           </form>
         </div>
       </div>
     </div>
 
-    <!-- 4단계 -->
+    <!-- ==================== 4단계: 완료 화면 ==================== -->
     <div id="page-4" class="page">
       <div class="min-h-screen flex items-center justify-center p-6 bg-brand/10">
-        <div class="text-center">
+        <div class="text-center w-full max-w-sm">
           <div class="text-7xl mb-6">🎉</div>
           <h2 class="text-2xl font-bold text-brown mb-4">신청 완료!</h2>
-          <p class="text-gray-700 mb-8">영업일 2~3일 내로<br>카카오톡으로 안내드릴게요!</p>
-          <div class="bg-white rounded-2xl p-5 text-left mb-6 shadow-sm">
-            <p class="text-gray-500 mb-2">문의사항이 있으시면</p>
-            <p class="text-brown font-bold text-lg">help@passorder.co.kr</p>
+          <p class="text-gray-700 mb-8">선정되면 영업일 2~3일 내로<br>문자 메시지로 안내드릴게요!</p>
+          
+          <div class="bg-white rounded-2xl p-5 mb-6 shadow-sm">
+            <h3 class="font-bold text-brown mb-4">📞 궁금한 내용은<br>아래 채널을 통해 문의해주세요!</h3>
+            <div class="space-y-3">
+              <a href="https://passorder.kr/e2zIF3ai" class="contact-btn primary">
+                <span>📝</span> 문의 채널에 남기기
+              </a>
+              <a href="https://passorder.kr/NabSZFl1" class="contact-btn kakao">
+                <span>💬</span> 1:1 문의하기
+              </a>
+            </div>
           </div>
+          
           <p class="text-gray-400">이 페이지를 닫으셔도 됩니다</p>
         </div>
       </div>
     </div>
-    
+
+    <!-- 푸터 -->
     <div id="footer" class="bg-brown p-6 text-center text-xs text-white/70">
       <p>© 2025 PAYTA LAB CORP. ALL RIGHTS RESERVED</p>
       <p class="mt-2">문의: help@passorder.co.kr</p>
@@ -297,8 +481,10 @@
   </div>
 
   <script>
+    // ========== 설정 ==========
     var GAS_URL = 'https://script.google.com/macros/s/AKfycbweYX7ZOg2M1goezR6RiXYz0tDVs1eHSaqOla_GQeGgLy0EV1l3PHAuilphj0ZGN3-J/exec';
     
+    // ========== 한국 시간 함수 ==========
     function getKoreanTime() {
       var now = new Date();
       var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
@@ -312,54 +498,91 @@
       return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
     }
     
+    // ========== 상태 변수 ==========
     var currentPage = 1;
     var selectedRole = '';
+    
+    // ========== URL 파라미터 ==========
     var params = new URLSearchParams(window.location.search);
     var entryTime = params.get('entry_time');
     var channel = params.get('channel') || '';
     
+    // entry_time 없으면 생성
     if (!entryTime) {
       entryTime = getKoreanTime();
       params.set('entry_time', entryTime);
       var newUrl = window.location.pathname + '?' + params.toString();
       window.history.replaceState({}, '', newUrl);
-      var pageViewData = new URLSearchParams({ entry_time: entryTime, channel: channel, user_agent: navigator.userAgent, referrer: document.referrer });
+      
+      // 페이지 뷰 기록
+      var pageViewData = new URLSearchParams({
+        entry_time: entryTime,
+        channel: channel,
+        user_agent: navigator.userAgent,
+        referrer: document.referrer
+      });
       fetch(GAS_URL + '?' + pageViewData.toString(), { mode: 'no-cors' });
     }
     
+    // 히든 필드 설정
     document.getElementById('entry_time').value = entryTime;
     document.getElementById('channel').value = channel;
     
+    // ========== PC/모바일 체크 & QR 코드 ==========
     var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(navigator.userAgent);
     
     if (!isMobile) {
       document.getElementById('qr-section').style.display = 'block';
-      var qrChannelMap = { 'banner_exclusive_pc': 'banner_exclusive_mo', 'banner_twice_pc': 'banner_twice_mo', 'banner_qr60_pc': 'banner_qr60_pcqr', 'popup_pc': 'popup_pcqr' };
-      var qrChannel = qrChannelMap[channel] || channel || 'direct';
-      var qrUrl = 'https://paytalab-m.github.io/part-timer-application-form/?channel=' + qrChannel;
-      new QRCode(document.getElementById('qr-code'), { text: qrUrl, width: 180, height: 180, colorDark: '#452614', colorLight: '#ffffff' });
+      
+      var qrUrlMap = {
+        'banner_exclusive_pc': 'https://passorder.kr/banner_exclusive_mo',
+        'banner_twice_pc': 'https://passorder.kr/banner_twice_mo',
+        'banner_qr60_pc': 'https://passorder.kr/banner_qr60_pcqr',
+        'popup_pc': 'https://passorder.kr/popup_pcqr'
+      };
+      
+      var qrUrl = qrUrlMap[channel] || 'https://passorder.kr/alba_form';
+      
+      new QRCode(document.getElementById('qr-code'), {
+        text: qrUrl,
+        width: 180,
+        height: 180,
+        colorDark: '#452614',
+        colorLight: '#ffffff'
+      });
     }
     
+    // ========== QR 토글 ==========
     function toggleQR() {
       var content = document.getElementById('qr-content');
       var arrow = document.getElementById('qr-arrow');
-      if (content.classList.contains('hidden')) { content.classList.remove('hidden'); arrow.textContent = '▲'; }
-      else { content.classList.add('hidden'); arrow.textContent = '▼'; }
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        arrow.textContent = '▲';
+      } else {
+        content.classList.add('hidden');
+        arrow.textContent = '▼';
+      }
     }
     
+    // ========== 페이지 전환 ==========
     function goToPage(pageNum) {
       document.getElementById('page-' + currentPage).classList.remove('active');
       document.getElementById('page-' + pageNum).classList.add('active');
       currentPage = pageNum;
+      
       document.getElementById('progress').style.width = (pageNum / 4) * 100 + '%';
       document.getElementById('footer').style.display = pageNum === 4 ? 'none' : 'block';
+      
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      
       if (pageNum === 2) {
         document.getElementById('info-alba').classList.toggle('hidden', selectedRole !== 'alba');
         document.getElementById('info-owner').classList.toggle('hidden', selectedRole !== 'owner');
       }
     }
     
+    // ========== 역할 선택 ==========
     var roleCards = document.querySelectorAll('.role-card');
     var btnToPage2 = document.getElementById('btn-to-page2');
     
@@ -373,15 +596,25 @@
       });
     });
     
-    btnToPage2.addEventListener('click', function() { if (selectedRole) { goToPage(2); } });
-    
-    document.getElementById('phone').addEventListener('input', function(e) {
-      var value = e.target.value.replace(/[^0-9]/g, '');
-      if (value.length <= 3) { e.target.value = value; }
-      else if (value.length <= 7) { e.target.value = value.slice(0, 3) + '-' + value.slice(3); }
-      else { e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11); }
+    btnToPage2.addEventListener('click', function() {
+      if (selectedRole) {
+        goToPage(2);
+      }
     });
     
+    // ========== 전화번호 포맷 ==========
+    document.getElementById('phone').addEventListener('input', function(e) {
+      var value = e.target.value.replace(/[^0-9]/g, '');
+      if (value.length <= 3) {
+        e.target.value = value;
+      } else if (value.length <= 7) {
+        e.target.value = value.slice(0, 3) + '-' + value.slice(3);
+      } else {
+        e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+      }
+    });
+    
+    // ========== 주소 검색 ==========
     function searchAddress() {
       new daum.Postcode({
         oncomplete: function(data) {
@@ -392,17 +625,31 @@
       }).open();
     }
     
+    // ========== 폼 제출 ==========
     document.getElementById('application-form').addEventListener('submit', function(e) {
       e.preventDefault();
+      
       var submitBtn = document.getElementById('submit-btn');
       submitBtn.disabled = true;
       submitBtn.textContent = '제출 중...';
+      
       var formData = new FormData(this);
       formData.append('submit_time', getKoreanTime());
       formData.append('agreement', document.getElementById('agreement').checked ? 'Y' : 'N');
-      fetch(GAS_URL, { method: 'POST', body: formData, mode: 'no-cors' })
-        .then(function() { goToPage(4); })
-        .catch(function() { alert('제출 중 오류가 발생했습니다.'); submitBtn.disabled = false; submitBtn.textContent = '신청 완료하기'; });
+      
+      fetch(GAS_URL, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+      })
+      .then(function() {
+        goToPage(4);
+      })
+      .catch(function() {
+        alert('제출 중 오류가 발생했습니다.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '신청 완료하기';
+      });
     });
   </script>
 </body>
