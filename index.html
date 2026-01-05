@@ -532,26 +532,42 @@
 
   <script>
     // ========== 설정 ==========
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbweYX7ZOg2M1goezR6RiXYz0tDVs1eHSaqOla_GQeGgLy0EV1l3PHAuilphj0ZGN3-J/exec';
+    var GAS_URL = 'https://script.google.com/macros/s/AKfycbweYX7ZOg2M1goezR6RiXYz0tDVs1eHSaqOla_GQeGgLy0EV1l3PHAuilphj0ZGN3-J/exec';
+    
+    // ========== 한국 시간 변환 함수 ==========
+    function getKoreanTime() {
+      var now = new Date();
+      var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      var kst = new Date(utc + (9 * 60 * 60 * 1000));
+      
+      var year = kst.getFullYear();
+      var month = String(kst.getMonth() + 1).padStart(2, '0');
+      var day = String(kst.getDate()).padStart(2, '0');
+      var hours = String(kst.getHours()).padStart(2, '0');
+      var minutes = String(kst.getMinutes()).padStart(2, '0');
+      var seconds = String(kst.getSeconds()).padStart(2, '0');
+      
+      return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+    }
     
     // ========== 상태 ==========
-    let currentPage = 1;
-    let selectedRole = '';
+    var currentPage = 1;
+    var selectedRole = '';
     
     // ========== URL 파라미터 & entry_time ==========
-    const params = new URLSearchParams(window.location.search);
-    let entryTime = params.get('entry_time');
-    const channel = params.get('channel') || '';
+    var params = new URLSearchParams(window.location.search);
+    var entryTime = params.get('entry_time');
+    var channel = params.get('channel') || '';
     
     // entry_time 없으면 생성 + URL 업데이트
     if (!entryTime) {
-      entryTime = new Date().toISOString();
+      entryTime = getKoreanTime();
       params.set('entry_time', entryTime);
-      const newUrl = window.location.pathname + '?' + params.toString();
+      var newUrl = window.location.pathname + '?' + params.toString();
       window.history.replaceState({}, '', newUrl);
       
       // 페이지 뷰 기록
-      const pageViewData = new URLSearchParams({
+      var pageViewData = new URLSearchParams({
         entry_time: entryTime,
         channel: channel,
         user_agent: navigator.userAgent,
@@ -637,7 +653,7 @@
       submitBtn.textContent = '제출 중...';
       
       var formData = new FormData(this);
-      formData.append('submit_time', new Date().toISOString());
+      formData.append('submit_time', getKoreanTime());
       formData.append('agreement', document.getElementById('agreement').checked ? 'Y' : 'N');
       
       fetch(GAS_URL, {
