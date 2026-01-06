@@ -394,7 +394,7 @@
           <p class="font-bold text-brown mb-1 text-lg">📝 신청 정보를 입력해주세요</p>
           <p class="text-gray-600 mb-6">선착순 마감될 수 있어요</p>
           
-          <form id="application-form" class="space-y-5">
+          <form id="application-form" class="space-y-7">
             <input type="hidden" id="entry_time" name="entry_time">
             <input type="hidden" id="channel" name="channel">
             <input type="hidden" id="role" name="role">
@@ -402,7 +402,7 @@
             <!-- 매장명 -->
             <div>
               <label class="block text-sm font-bold text-brown mb-2">매장명 <span class="text-red-500">*</span></label>
-              <p class="text-sm text-gray-500 mb-3">패스오더 프로그램 내에 등록된 이름으로 적어주시면 좋아요 😊</p>
+              <p class="text-sm text-gray-500 mb-3">패스오더 프로그램 내에<br>등록된 이름으로 적어주시면 좋아요 😊</p>
               <img src="images/폼_내_매장명.png" alt="매장명 예시" class="w-full rounded-xl mb-3 border border-gray-200">
               <input type="text" id="store_name" name="store_name" required class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-base" placeholder="예: 패스커피 강남점">
             </div>
@@ -410,7 +410,7 @@
             <!-- 닉네임 -->
             <div>
               <label class="block text-sm font-bold text-brown mb-2">닉네임 <span class="text-red-500">*</span></label>
-              <p class="text-sm text-gray-500 mb-3">손님 전달용 쿠폰에 닉네임을 커스텀하여 제작해 드릴 예정이에요 😊 (2 ~ 6자)</p>
+              <p class="text-sm text-gray-500 mb-3">손님 전달용 쿠폰에 닉네임을 커스텀하여<br>제작해 드릴 예정이에요 😊 (2 ~ 6자)</p>
               <input type="text" id="nickname" name="nickname" required minlength="2" maxlength="6" class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-base" placeholder="예: 민수">
             </div>
             
@@ -424,10 +424,10 @@
             <!-- 주소 -->
             <div>
               <label class="block text-sm font-bold text-brown mb-2">손님 전달용 쿠폰을 배송 받을 주소 <span class="text-red-500">*</span></label>
-              <p class="text-sm text-gray-500 mb-3">매장 주소는 분실 위험이 있어서, 되도록 자택 주소로 부탁드려요 😊</p>
+              <p class="text-sm text-gray-500 mb-3">매장 주소는 분실 위험이 있어서,<br>되도록 자택 주소로 부탁드려요 😊</p>
               <div class="flex gap-2 mb-3">
                 <input type="text" id="zipcode" name="zipcode" readonly required class="w-28 border border-gray-300 rounded-xl px-4 py-3.5 text-base bg-gray-50" placeholder="우편번호">
-                <button type="button" onclick="searchAddress(event); return false;" class="bg-brown text-white px-4 py-3.5 rounded-xl font-bold text-sm whitespace-nowrap hover:bg-brownLight">🔍 주소 검색</button>
+                <button type="button" onclick="return searchAddress(event);" class="bg-brown text-white px-4 py-3.5 rounded-xl font-bold text-sm whitespace-nowrap hover:bg-brownLight">🔍 주소 검색</button>
               </div>
               <input type="text" id="address" name="address" readonly required class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-base bg-gray-50 mb-3" placeholder="기본 주소">
               <input type="text" id="address_detail" name="address_detail" required class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-base" placeholder="상세 주소를 입력해주세요">
@@ -614,14 +614,22 @@
     
     // ========== 주소 검색 ==========
     function searchAddress(e) {
-      if (e) e.preventDefault();
-      new daum.Postcode({
-        oncomplete: function(data) {
-          document.getElementById('zipcode').value = data.zonecode;
-          document.getElementById('address').value = data.roadAddress || data.jibunAddress;
-          document.getElementById('address_detail').focus();
-        }
-      }).open();
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      try {
+        new daum.Postcode({
+          oncomplete: function(data) {
+            document.getElementById('zipcode').value = data.zonecode;
+            document.getElementById('address').value = data.roadAddress || data.jibunAddress;
+            document.getElementById('address_detail').focus();
+          }
+        }).open();
+      } catch (err) {
+        alert('주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+        console.error('Daum Postcode Error:', err);
+      }
       return false;
     }
     
