@@ -740,22 +740,49 @@
     }
     
     // ========== 주소 검색 ==========
-    document.getElementById('search-address-btn').addEventListener('click', function(e) {
+    var searchAddressBtn = document.getElementById('search-address-btn');
+    
+    searchAddressBtn.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
       
-      if (typeof daum === 'undefined' || typeof daum.Postcode === 'undefined') {
-        alert('주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
-        return false;
-      }
-      
-      new daum.Postcode({
-        oncomplete: function(data) {
-          document.getElementById('zipcode').value = data.zonecode;
-          document.getElementById('address').value = data.roadAddress || data.jibunAddress;
-          document.getElementById('address_detail').focus();
+      setTimeout(function() {
+        if (typeof daum === 'undefined' || typeof daum.Postcode === 'undefined') {
+          alert('주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+          return;
         }
-      }).open();
+        
+        new daum.Postcode({
+          oncomplete: function(data) {
+            document.getElementById('zipcode').value = data.zonecode;
+            document.getElementById('address').value = data.roadAddress || data.jibunAddress;
+            document.getElementById('address_detail').focus();
+          }
+        }).open({ autoClose: true });
+      }, 100);
+      
+      return false;
+    });
+    
+    // 모바일 터치 이벤트 추가
+    searchAddressBtn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      setTimeout(function() {
+        if (typeof daum === 'undefined' || typeof daum.Postcode === 'undefined') {
+          alert('주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+          return;
+        }
+        
+        new daum.Postcode({
+          oncomplete: function(data) {
+            document.getElementById('zipcode').value = data.zonecode;
+            document.getElementById('address').value = data.roadAddress || data.jibunAddress;
+            document.getElementById('address_detail').focus();
+          }
+        }).open({ autoClose: true });
+      }, 100);
       
       return false;
     });
