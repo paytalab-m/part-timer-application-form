@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>패스오더 시급 2배 챌린지 사전 알림 신청</title>
+  
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TBJRDLWT');
+  </script>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#FCD20B',
+            brandDark: '#E5BC00',
+            brown: '#452614',
+            brownLight: '#5C3A1E',
+            brownBg: '#FFF9E6'
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    * {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+    }
+    .role-card {
+      border: 2px solid #e5e7eb;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      text-align: center;
+      position: relative;
+      background: #ffffff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .role-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(69, 38, 20, 0.12);
+    }
+    .role-card.selected {
+      border-color: #FCD20B !important;
+      background: #FFF9E6 !important;
+      box-shadow: 0 0 0 3px rgba(252, 210, 11, 0.25);
+    }
+    .role-check {
+      display: none;
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      background: #FCD20B;
+      border-radius: 9999px;
+      align-items: center;
+      justify-content: center;
+    }
+    .role-card.selected .role-check {
+      display: flex !important;
+    }
+    .role-check svg {
+      width: 1rem;
+      height: 1rem;
+      color: #452614;
+    }
+    .page {
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+    .page.active {
+      display: block;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #FCD20B;
+      box-shadow: 0 0 0 3px rgba(252, 210, 11, 0.2);
+    }
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .contact-btn.primary {
+      background: #452614;
+      color: #FCD20B;
+    }
+    .contact-btn.primary:hover {
+      background: #5C3A1E;
+    }
+    .contact-btn.kakao {
+      background: #FEE500;
+      color: #3C1E1E;
+    }
+    .contact-btn.kakao:hover {
+      background: #E5CF00;
+    }
+  </style>
+</head>
+<body class="bg-brownBg min-h-screen">
+  
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBJRDLWT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  
+  <div class="max-w-lg mx-auto bg-white min-h-screen shadow-sm relative">
+    
+    <!-- ==================== 신청 폼 ==================== -->
+    <div id="page-form" class="page active">
+      <div class="bg-brand p-5">
+        <h2 class="text-center font-bold text-brown text-lg">챌린지 사전 알림 신청</h2>
+      </div>
+      
+      <div class="p-6">
+        <div class="bg-brand/10 rounded-2xl p-5 border-2 border-brand/30">
+          <p class="font-bold text-brown mb-3 text-lg">📝 신청 정보를 입력해주세요</p>
+          <p class="text-gray-600 text-sm mb-1 italic underline">⚠️ 챌린지 오픈 전, 사전 알림 신청이에요</p>
+          <p class="text-gray-600 text-sm font-bold mb-6">챌린지 오픈 시, 가장 먼저 알림 메시지를 받을 수 있어요🎁</p>
+          
+          <form id="application-form" class="space-y-7">
+            <!-- 히든 필드 -->
+            <input type="hidden" id="entry_time" name="entry_time">
+            <input type="hidden" id="channel" name="channel">
+            <input type="hidden" id="session_id" name="session_id">
+            <input type="hidden" id="role" name="role">
+            
+            <!-- 1. 근무 매장 -->
+            <div>
+              <label class="block text-sm font-bold text-brown mb-2">근무 매장 <span class="text-red-500">*</span></label>
+              <p class="text-sm text-gray-500 mb-3">POS기 내 패스오더 점주용 프로그램 내에<br>등록된 이름으로 적어주시면 좋아요 😊</p>
+              <img src="images/폼_내_매장명.png" alt="매장명 예시" class="w-full rounded-xl mb-3 border border-gray-200">
+              <input type="text" id="store_name" name="store_name" class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-base" placeholder="예: 메가커피 강남역지하상가점">
+            </div>
+            
+            <!-- 2. 연락처 -->
+            <div>
+              <label class="block text-sm font-bold text-brown mb-2">연락처 <span class="text-red-500">*</span></label>
+              <p class="text-sm text-gray-500 mb-3">챌린지 오픈 알림 및 안내에 필요해요 😊</p>
+              <div id="phone-hint" class="hidden text-sm text-brown bg-brand/20 rounded-lg px-3 py-2 mb-3 font-medium">
+                💡 뒷자리가 <span id="phone-last4-display" class="font-bold"></span>으로 끝나는 번호로 입력해주세요
+              </div>
+              <input type="tel" id="phone" name="phone" class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-base" placeholder="010-0000-0000" maxlength="13">
+            </div>
+            
+            <!-- 3. 역할 -->
+            <div>
+              <label class="block text-sm font-bold text-brown mb-2">역할 <span class="text-red-500">*</span></label>
+              <p class="text-sm text-gray-500 mb-3">알바 / 점주 관계없이 패스오더 도입 매장에서 일하고 계시다면 누구나 참여 가능해요!</p>
+              <div class="grid grid-cols-2 gap-3">
+                <!-- 알바 카드 -->
+                <div class="role-card" data-role="alba">
+                  <div class="role-check">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </div>
+                  <p class="font-bold text-brown">🙋 알바</p>
+                  <p class="text-xs text-gray-500 mt-1">파트타이머 / 매니저 / 직원</p>
+                </div>
+                
+                <!-- 점주 카드 -->
+                <div class="role-card" data-role="owner">
+                  <div class="role-check">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </div>
+                  <p class="font-bold text-brown">👔 점주</p>
+                  <p class="text-xs text-gray-500 mt-1">매장 대표 / 오너</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 4. 닉네임 -->
+            <div>
+              <label class="block text-sm font-bold text-brown mb-2">닉네임 <span class="text-red-500">*</span></label>
+              <p class="text-sm text-gray-500 mb-3">손님 전달용 쿠폰에 닉네임을 커스텀하여 제작해 드릴 예정이에요 😊 (2~6자)</p>
+              <input type="text" id="nickname" name="nickname" minlength="2" maxlength="6" class="w-full border border-gray-300 rounded-xl px-4 py-3.5 text-base" placeholder="예: 민수">
+            </div>
+            
+            <!-- 개인정보 수집 및 이용 동의 -->
+            <div class="bg-gray-100/50 rounded-xl p-4 border border-gray-200">
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input type="checkbox" id="agreement" name="agreement" class="w-5 h-5 mt-0.5 accent-amber-500 rounded">
+                <div class="flex-1" onclick="togglePrivacy(event)">
+                  <div class="flex items-center gap-1 cursor-pointer">
+                    <span class="text-red-500 text-sm">[필수]</span>
+                    <span class="text-gray-700 font-medium underline">개인정보 수집 및 이용 동의</span>
+                    <span id="privacy-arrow" class="text-gray-400 text-sm ml-1">▼</span>
+                  </div>
+                </div>
+              </label>
+              
+              <div id="privacy-content" class="hidden mt-4 bg-white rounded-lg p-5 text-sm text-gray-600 space-y-6 border">
+                <p class="text-gray-500 pb-4 border-b">본 개인정보 수집 및 이용은 패스오더 개인정보 처리방침에 따릅니다.</p>
+                
+                <div>
+                  <p class="font-bold text-gray-700 mb-3">수집하는 개인정보 항목</p>
+                  <table class="w-full text-left border-2 border-gray-400 rounded-lg overflow-hidden">
+                    <tr class="border-b border-gray-300">
+                      <td class="py-3 px-3 text-gray-600 font-medium w-24 bg-gray-100 border-r border-gray-300">수집 항목</td>
+                      <td class="py-3 px-3 bg-white">역할, 매장명, 연락처(휴대전화번호), 닉네임</td>
+                    </tr>
+                    <tr>
+                      <td class="py-3 px-3 text-gray-600 font-medium bg-gray-100 border-r border-gray-300">수집 방법</td>
+                      <td class="py-3 px-3 bg-white">패스오더 [시급2배 챌린지] 사전 알림 신청 페이지 내 직접 입력</td>
+                    </tr>
+                  </table>
+                </div>
+                
+                <div>
+                  <p class="font-bold text-gray-700 mb-3">개인정보의 수집 및 이용 목적</p>
+                  <ul class="list-disc list-inside space-y-2 text-gray-600 bg-gray-50 p-4 rounded-lg">
+                    <li>패스오더 [시급2배 챌린지] 오픈 알림 발송</li>
+                    <li>챌린지 안내 및 진행 관련 메시지 발송</li>
+                    <li>서비스 관련 공지사항 및 업데이트 안내</li>
+                    <li>프로모션, 이벤트, 혜택 정보 안내</li>
+                    <li>서비스 이용 관련 문의 응대 및 고객 지원</li>
+                    <li>서비스 개선을 위한 통계 분석 (비식별 처리)</li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <p class="font-bold text-gray-700 mb-3">개인정보의 보유 및 이용 기간</p>
+                  <table class="w-full text-left border-2 border-gray-400 rounded-lg overflow-hidden">
+                    <tr class="border-b border-gray-300">
+                      <td class="py-3 px-3 text-gray-600 font-medium w-24 bg-gray-100 border-r border-gray-300">보유 기간</td>
+                      <td class="py-3 px-3 bg-white">수집일로부터 1년 또는 동의 철회 시까지</td>
+                    </tr>
+                    <tr>
+                      <td class="py-3 px-3 text-gray-600 font-medium bg-gray-100 border-r border-gray-300">파기 방법</td>
+                      <td class="py-3 px-3 bg-white">보유 기간 경과 후 지체 없이 파기</td>
+                    </tr>
+                  </table>
+                  <p class="text-xs text-gray-400 mt-3">※ 단, 관계 법령에 따라 보존할 필요가 있는 경우 해당 법령에서 정한 기간 동안 보관됩니다.</p>
+                </div>
+                
+                <div>
+                  <p class="font-bold text-gray-700 mb-3">개인정보의 제3자 제공</p>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <p class="mb-3">수집된 개인정보는 원칙적으로 제3자에게 제공하지 않습니다. 다만, 아래의 경우에는 예외로 합니다.</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600">
+                      <li>이용자가 사전에 동의한 경우</li>
+                      <li>법령의 규정에 의거하거나, 수사 목적으로 법령에 정해진 절차와 방법에 따라 수사기관의 요구가 있는 경우</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div>
+                  <p class="font-bold text-gray-700 mb-3">동의 거부권 및 불이익 안내</p>
+                  <p class="bg-gray-50 p-4 rounded-lg">귀하는 개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있습니다. 다만, 동의를 거부하실 경우 [시급2배 챌린지] 사전 알림 신청이 제한될 수 있습니다.</p>
+                </div>
+              </div>
+            </div>
+            
+            <button type="submit" id="submit-btn" class="w-full bg-brand text-brown py-4 rounded-xl font-bold text-lg hover:bg-brandDark transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+              사전 알림 신청하기
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 완료 화면 ==================== -->
+    <div id="page-complete" class="page">
+      <div class="min-h-screen flex items-center justify-center p-6 bg-brand/10">
+        <div class="text-center w-full max-w-sm">
+          <div class="text-7xl mb-6">🎉</div>
+          <h2 class="text-2xl font-bold text-brown mb-4">신청 완료!</h2>
+          <p class="text-gray-700 mb-2">챌린지 <b>사전 알림 신청</b>이 완료되었어요.</p>
+          <p class="text-gray-700 mb-6">챌린지가 오픈되면<br>가장 먼저 알림 메시지를 보내드릴게요!</p>
+          
+          <div class="bg-white rounded-2xl p-5 mb-6 shadow-sm text-left">
+            <p class="font-bold text-brown mb-2">📌 안내드려요</p>
+            <p class="text-sm text-gray-700 mb-2">지금 신청하신 건 <b>사전 알림 신청</b>이에요.</p>
+            <p class="text-sm text-gray-700 mb-2">실제 챌린지 참여를 위해서는 <b>챌린지 오픈 후 추가 신청 절차</b>가 필요해요.</p>
+            <p class="text-sm text-gray-700">오픈 알림 메시지를 받으신 후, 안내에 따라 진행해주시면 돼요 😊</p>
+          </div>
+          
+          <div class="bg-white rounded-2xl p-5 mb-6 shadow-sm">
+            <h3 class="font-bold text-brown mb-4">📞 궁금한 내용은<br>아래 채널을 통해 문의해주세요!</h3>
+            <div class="space-y-3">
+              <a href="https://passorder.kr/e2zIF3ai" class="contact-btn primary">
+                <span>📝</span> 문의 채널에 남기기
+              </a>
+              <a href="https://passorder.kr/NabSZFl1" class="contact-btn kakao">
+                <span>💬</span> 1:1 문의하기
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 푸터 -->
+    <div id="footer" class="bg-brown p-8 flex justify-center items-center">
+      <img src="images/패스오더_로고.png" alt="패스오더" class="h-6">
+    </div>
+  </div>
+
+  <script>
+    // ========== 설정 ==========
+    var GAS_URL = 'https://script.google.com/macros/s/AKfycbweYX7ZOg2M1goezR6RiXYz0tDVs1eHSaqOla_GQeGgLy0EV1l3PHAuilphj0ZGN3-J/exec';
+    
+    // ========== 한국 시간 함수 ==========
+    function getKoreanTime() {
+      var now = new Date();
+      var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      var kst = new Date(utc + (9 * 60 * 60 * 1000));
+      var year = kst.getFullYear();
+      var month = String(kst.getMonth() + 1).padStart(2, '0');
+      var day = String(kst.getDate()).padStart(2, '0');
+      var hours = String(kst.getHours()).padStart(2, '0');
+      var minutes = String(kst.getMinutes()).padStart(2, '0');
+      var seconds = String(kst.getSeconds()).padStart(2, '0');
+      return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+    }
+    
+    // ========== 세션 ID 생성 ==========
+    // 페이지 로드마다 새로운 세션 ID 생성 (새로고침도 새 세션으로 취급)
+    function generateSessionId() {
+      return 's_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 10);
+    }
+    
+    // ========== 상태 변수 ==========
+    var selectedRole = '';
+    var currentPage = 'form';
+    
+    // ========== URL 파라미터 처리 ==========
+    var params = new URLSearchParams(window.location.search);
+    var entryTime = params.get('entry_time');
+    var channel = params.get('channel') || '';
+    var storeNameParam = params.get('store_name') || '';
+    var phoneLast4Param = params.get('phone_last4') || '';
+    
+    // 세션 ID는 이 페이지 방문마다 새로 발급
+    var sessionId = generateSessionId();
+    
+    // entry_time 없으면 생성
+    if (!entryTime) {
+      entryTime = getKoreanTime();
+      params.set('entry_time', entryTime);
+      // iframe/srcdoc 환경 등에서 replaceState가 SecurityError를 던질 수 있어 방어
+      try {
+        var newUrl = window.location.pathname + '?' + params.toString();
+        window.history.replaceState({}, '', newUrl);
+      } catch (err) {
+        // URL 업데이트 실패해도 entry_time은 메모리에 유지되므로 기능엔 영향 없음
+      }
+    }
+    
+    // 히든 필드 설정
+    document.getElementById('entry_time').value = entryTime;
+    document.getElementById('channel').value = channel;
+    document.getElementById('session_id').value = sessionId;
+    
+    // 매장명 pre-fill
+    if (storeNameParam) {
+      document.getElementById('store_name').value = decodeURIComponent(storeNameParam);
+    }
+    
+    // 전화번호 뒷자리 안내 표시
+    if (phoneLast4Param) {
+      var last4 = phoneLast4Param.replace(/[^0-9]/g, '').slice(-4);
+      if (last4.length === 4) {
+        document.getElementById('phone-last4-display').textContent = last4;
+        document.getElementById('phone-hint').classList.remove('hidden');
+      }
+    }
+    
+    // ========== 페이지 뷰 기록 (세션 단위) ==========
+    function logEvent(eventType, extra) {
+      try {
+        var data = new URLSearchParams({
+          event_type: eventType,
+          session_id: sessionId,
+          entry_time: entryTime,
+          event_time: getKoreanTime(),
+          channel: channel,
+          store_name_param: storeNameParam,
+          phone_last4_param: phoneLast4Param,
+          user_agent: navigator.userAgent,
+          referrer: document.referrer
+        });
+        if (extra) {
+          Object.keys(extra).forEach(function(k) {
+            data.set(k, extra[k]);
+          });
+        }
+        fetch(GAS_URL + '?' + data.toString(), { mode: 'no-cors' }).catch(function() {});
+      } catch (err) {}
+    }
+    
+    // 최초 페이지 뷰 기록
+    logEvent('page_view');
+    
+    // ========== 페이지 전환 ==========
+    function goToPage(pageName) {
+      document.getElementById('page-' + currentPage).classList.remove('active');
+      document.getElementById('page-' + pageName).classList.add('active');
+      currentPage = pageName;
+      
+      document.getElementById('footer').style.display = pageName === 'complete' ? 'none' : 'flex';
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // ========== 역할 선택 ==========
+    var roleCards = document.querySelectorAll('.role-card');
+    
+    roleCards.forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        // 자식 요소 클릭해도 실제 카드를 찾아내기 위해 closest 사용
+        var clickedCard = e.target.closest('.role-card');
+        if (!clickedCard) return;
+        
+        roleCards.forEach(function(c) { c.classList.remove('selected'); });
+        clickedCard.classList.add('selected');
+        selectedRole = clickedCard.dataset.role;
+        document.getElementById('role').value = selectedRole;
+        
+        logEvent('role_selected', { role: selectedRole });
+      });
+    });
+    
+    // ========== 전화번호 포맷 ==========
+    document.getElementById('phone').addEventListener('input', function(e) {
+      var value = e.target.value.replace(/[^0-9]/g, '');
+      if (value.length <= 3) {
+        e.target.value = value;
+      } else if (value.length <= 7) {
+        e.target.value = value.slice(0, 3) + '-' + value.slice(3);
+      } else {
+        e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+      }
+    });
+    
+    // ========== 개인정보 동의 토글 ==========
+    function togglePrivacy(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var content = document.getElementById('privacy-content');
+      var arrow = document.getElementById('privacy-arrow');
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        arrow.textContent = '▲';
+      } else {
+        content.classList.add('hidden');
+        arrow.textContent = '▼';
+      }
+    }
+    
+    // ========== 폼 제출 ==========
+    var form = document.getElementById('application-form');
+    var submitBtn = document.getElementById('submit-btn');
+    
+    // 버튼을 type="button"으로 바꿔 native submit 방지 + click 이벤트로 직접 처리
+    submitBtn.type = 'button';
+    
+    function handleSubmit() {
+      // 각 필드 JS 검증
+      var storeName = document.getElementById('store_name').value.trim();
+      var phone = document.getElementById('phone').value.trim();
+      var roleValue = document.getElementById('role').value;
+      var nickname = document.getElementById('nickname').value.trim();
+      var agreement = document.getElementById('agreement').checked;
+      
+      if (!storeName) {
+        alert('근무 매장을 입력해주세요! 🙏');
+        document.getElementById('store_name').focus();
+        return;
+      }
+      if (!phone || phone.replace(/[^0-9]/g, '').length < 10) {
+        alert('연락처를 정확히 입력해주세요! 🙏');
+        document.getElementById('phone').focus();
+        return;
+      }
+      if (!roleValue) {
+        alert('역할을 선택해주세요! 🙏');
+        return;
+      }
+      if (!nickname || nickname.length < 2) {
+        alert('닉네임을 2자 이상 입력해주세요! 🙏');
+        document.getElementById('nickname').focus();
+        return;
+      }
+      if (!agreement) {
+        alert('개인정보 수집 및 이용 동의에 체크해주세요! 🙏');
+        document.getElementById('agreement').focus();
+        return;
+      }
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = '제출 중...';
+      
+      // FormData 직접 구성
+      var formData = new FormData();
+      formData.append('entry_time', document.getElementById('entry_time').value);
+      formData.append('channel', document.getElementById('channel').value);
+      formData.append('session_id', document.getElementById('session_id').value);
+      formData.append('role', roleValue);
+      formData.append('store_name', storeName);
+      formData.append('phone', phone);
+      formData.append('nickname', nickname);
+      formData.append('submit_time', getKoreanTime());
+      formData.append('agreement', agreement ? 'Y' : 'N');
+      formData.append('store_name_param', storeNameParam);
+      formData.append('phone_last4_param', phoneLast4Param);
+      
+      fetch(GAS_URL, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+      })
+      .then(function() {
+        logEvent('form_submitted');
+        goToPage('complete');
+      })
+      .catch(function() {
+        alert('제출 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '사전 알림 신청하기';
+      });
+    }
+    
+    submitBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      handleSubmit();
+    });
+    
+    // Enter 키로 제출 시 대비
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        handleSubmit();
+      });
+    }
+  </script>
+</body>
+</html>
