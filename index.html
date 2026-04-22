@@ -310,7 +310,7 @@
 
   <script>
     // ========== 설정 ==========
-    var GAS_URL = 'https://script.google.com/macros/s/AKfycbxk9E5GyqEQ58Zv7-zg7_l513TdNJEQzA8dK7wfj1SdwvRTMkdL496aLmREU0XYdEVI/exec';
+    var GAS_URL = 'https://script.google.com/macros/s/AKfycbwiJfGpTLHJ7KSP5uNS8iYBml5VLcsGfOBeLBG_YXN9TQ9NMBa5glCaesAyLA4389S5/exec';
     
     // ========== 한국 시간 함수 ==========
     function getKoreanTime() {
@@ -340,8 +340,10 @@
     var params = new URLSearchParams(window.location.search);
     var entryTime = params.get('entry_time');
     var channel = params.get('channel') || '';
-    var storeNameParam = params.get('store_name') || '';
-    var phoneLast4Param = params.get('phone_last4') || '';
+    var storeNameParam = params.get('store_name_param') || params.get('store_name') || '';
+    var phoneParam = params.get('phone_param') || params.get('phone') || '';
+    var phoneLast4Param = params.get('phone_last4_param') || params.get('phone_last4') || '';
+    var roleParam = params.get('role_param') || params.get('role') || '';
     
     // 세션 ID는 이 페이지 방문마다 새로 발급
     var sessionId = generateSessionId();
@@ -369,12 +371,36 @@
       document.getElementById('store_name').value = decodeURIComponent(storeNameParam);
     }
     
-    // 전화번호 뒷자리 안내 표시
-    if (phoneLast4Param) {
+    // 연락처 pre-fill: 전체 번호 파라미터 있으면 채우기
+    if (phoneParam) {
+      var rawPhone = decodeURIComponent(phoneParam).replace(/[^0-9]/g, '');
+      var formatted = rawPhone;
+      if (rawPhone.length >= 11) {
+        formatted = rawPhone.slice(0, 3) + '-' + rawPhone.slice(3, 7) + '-' + rawPhone.slice(7, 11);
+      } else if (rawPhone.length >= 8) {
+        formatted = rawPhone.slice(0, 3) + '-' + rawPhone.slice(3, 7) + '-' + rawPhone.slice(7);
+      } else if (rawPhone.length > 3) {
+        formatted = rawPhone.slice(0, 3) + '-' + rawPhone.slice(3);
+      }
+      document.getElementById('phone').value = formatted;
+    }
+    
+    // 전화번호 뒷자리 안내 표시 (phone_param이 없을 때만 힌트 노출)
+    if (!phoneParam && phoneLast4Param) {
       var last4 = phoneLast4Param.replace(/[^0-9]/g, '').slice(-4);
       if (last4.length === 4) {
         document.getElementById('phone-last4-display').textContent = last4;
         document.getElementById('phone-hint').classList.remove('hidden');
+      }
+    }
+    
+    // 역할 pre-select
+    if (roleParam === 'alba' || roleParam === 'owner') {
+      var targetCard = document.querySelector('.role-card[data-role="' + roleParam + '"]');
+      if (targetCard) {
+        targetCard.classList.add('selected');
+        selectedRole = roleParam;
+        document.getElementById('role').value = roleParam;
       }
     }
     
@@ -388,7 +414,9 @@
           event_time: getKoreanTime(),
           channel: channel,
           store_name_param: storeNameParam,
+          phone_param: phoneParam,
           phone_last4_param: phoneLast4Param,
+          role_param: roleParam,
           user_agent: navigator.userAgent,
           referrer: document.referrer
         });
@@ -515,7 +543,9 @@
       formData.append('submit_time', getKoreanTime());
       formData.append('agreement', agreement ? 'Y' : 'N');
       formData.append('store_name_param', storeNameParam);
+      formData.append('phone_param', phoneParam);
       formData.append('phone_last4_param', phoneLast4Param);
+      formData.append('role_param', roleParam);
       
       fetch(GAS_URL, {
         method: 'POST',
